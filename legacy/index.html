@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BINGO Tracker | Premium Pro Edition</title>
+    <meta name="description"
+        content="A premium, sleek, and high-performance Bingo number tracker for professional gaming.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎱</text></svg>">
+</head>
+
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <main class="app-container">
+        <aside class="sidebar">
+            <header class="header">
+                <h1 class="logo">BINGO <span class="accent">TRACKER</span></h1>
+                <p class="subtitle">Real-time tracking & management</p>
+            </header>
+
+            <nav class="sidebar-nav">
+                <button id="view-grid" class="nav-btn active">GRID</button>
+                <button id="view-card" class="nav-btn">MY CARD</button>
+                <button id="view-pattern" class="nav-btn">PATTERN</button>
+            </nav>
+
+            <section id="grid-controls" class="controls-panel card">
+                <div class="input-group">
+                    <label for="number-input">QUICK MARK</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="number-input" placeholder="Num" min="1" max="75">
+                        <button id="add-btn" class="btn-primary">MARK</button>
+                    </div>
+                </div>
+                <div class="stats-group">
+                    <div class="stat">
+                        <span class="stat-label">CALLED</span>
+                        <span id="called-count" class="stat-value">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">REMAINING</span>
+                        <span id="remaining-count" class="stat-value">75</span>
+                    </div>
+                </div>
+                <div class="settings-group">
+                    <label class="toggle-container">
+                        <input type="checkbox" id="speech-toggle" checked>
+                        <span class="toggle-label">Voice Announcement</span>
+                    </label>
+                    <input type="password" id="elevenlabs-key" class="input-apikey hidden"
+                        placeholder="ElevenLabs API Key (Optional)">
+                    <div style="font-size: 0.6rem; color: var(--text-muted); margin-top: 4px;">
+                        <label><input type="checkbox" id="use-elevenlabs"> Use ElevenLabs AI Voice</label>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button id="undo-btn" class="btn-secondary">UNDO</button>
+                    <button id="reset-btn" class="btn-secondary">RESET</button>
+                </div>
+            </section>
+
+            <section class="last-called card">
+                <h2>LAST CALLED</h2>
+                <div id="history-list" class="history-list">
+                    <div class="empty-history">No numbers called yet</div>
+                </div>
+            </section>
+        </aside>
+
+        <section class="grid-container main-view" id="grid-view">
+            <div class="grid-layout-wrapper">
+                <div class="now-calling-hud card">
+                    <span class="hud-label">NOW CALLING</span>
+                    <div id="current-number-display" class="hud-value">--</div>
+                </div>
+
+                <div class="bingo-grid-container">
+                    <div class="bingo-grid">
+                        <div class="column-container" data-col="B">
+                            <div class="numbers-grid" id="grid-B"></div>
+                        </div>
+                        <div class="column-container" data-col="I">
+                            <div class="numbers-grid" id="grid-I"></div>
+                        </div>
+                        <div class="column-container" data-col="N">
+                            <div class="numbers-grid" id="grid-N"></div>
+                        </div>
+                        <div class="column-container" data-col="G">
+                            <div class="numbers-grid" id="grid-G"></div>
+                        </div>
+                        <div class="column-container" data-col="O">
+                            <div class="numbers-grid" id="grid-O"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid-container main-view hidden" id="my-card-view">
+            <div class="cards-container-header">
+                <h2>MY BINGO CARDS</h2>
+                <button id="add-card-btn" class="btn-add-card">+ ADD CARD</button>
+            </div>
+            <div class="user-card-list" id="user-cards-list">
+                <!-- Multiple cards will be injected here -->
+            </div>
+        </section>
+
+        <section class="grid-container main-view hidden" id="pattern-view">
+            <div class="pattern-header">
+                <div class="pattern-container-header">
+                    <div class="header-left">
+                        <h2>WINNING PATTERNS</h2>
+                        <p>Customize and manage multiple winning patterns</p>
+                    </div>
+                </div>
+
+                <div class="pattern-presets-bar card">
+                    <span class="preset-label">QUICK PRESETS:</span>
+                    <div class="preset-buttons">
+                        <button class="btn-preset" data-preset="corners">4 Corners</button>
+                        <button class="btn-preset" data-preset="line-h">Horizontal</button>
+                        <button class="btn-preset" data-preset="line-v">Vertical</button>
+                        <button class="btn-preset" data-preset="x">Large X</button>
+                        <button class="btn-preset" data-preset="blackout">Blackout</button>
+                    </div>
+                    <div class="header-actions">
+                        <button id="add-pattern-btn" class="btn-add-pattern">+ NEW CUSTOM</button>
+                    </div>
+                </div>
+            </div>
+            <div class="pattern-list" id="patterns-list">
+                <!-- Multiple patterns will be injected here -->
+            </div>
+        </section>
+    </main>
+
+    <div id="bingo-overlay" class="bingo-overlay hidden">
+        <div class="bingo-modal card">
+            <div class="bingo-icon">🎉</div>
+            <h1>BINGO!</h1>
+            <p>A winning pattern has been matched!</p>
+            <button class="btn-primary"
+                onclick="document.getElementById('bingo-overlay').classList.add('hidden')">CONTINUE</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
